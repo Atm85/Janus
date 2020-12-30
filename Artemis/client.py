@@ -37,7 +37,7 @@ class Artemis(commands.Bot):
     # ---------- Overridden from 'commands.Bot' class ----------
     ############################################################
     async def on_ready(self):
-        print(self.user.name + " is now logged in")
+        print(self.user.name + " - status: online")
 
         # changes bots presence in discord
         await self.change_presence(activity=discord.Game(name="Bot help | {}help".format(self.prefix)))
