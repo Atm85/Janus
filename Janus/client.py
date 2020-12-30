@@ -49,7 +49,7 @@ class Janus(commands.Bot):
             except Exception as error:
                 print("[x] {} failed to load: [{}]".format(ext, error))
 
-            print(self.user.name + " - status: online")
+        print(self.user.name + " - status: online")
 
     # called when a member join a guild
     ####################################
