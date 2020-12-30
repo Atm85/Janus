@@ -234,7 +234,6 @@ class MysqlProvider:
             sql = "SELECT `enabled` FROM `guild_data` WHERE `id`=%s"
             cursor.execute(sql, id_)
             result = cursor.fetchone()
-            print(result[0])
             return result[0]
 
     """
