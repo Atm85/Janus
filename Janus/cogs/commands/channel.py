@@ -1,7 +1,7 @@
 import asyncio
 
 from discord.ext import commands
-from client import Artemis
+from client import Janus
 
 
 class ChannelCommand(commands.Cog):
@@ -12,7 +12,7 @@ class ChannelCommand(commands.Cog):
     async def channel(self, ctx):
 
         # database connection
-        connection = Artemis.provider.connection
+        connection = Janus.provider.connection
 
         # gets the response from the user after executing main command
         def get_response(response):
@@ -27,11 +27,11 @@ class ChannelCommand(commands.Cog):
                 with connection.cursor() as cursor:
 
                     # create new entry if not existent
-                    if Artemis.provider.get_guild(ctx.message.guild.id) is None:
-                        Artemis.provider.create_new(ctx.message.guild.id)
+                    if Janus.provider.get_guild(ctx.message.guild.id) is None:
+                        Janus.provider.create_new(ctx.message.guild.id)
 
                     # saves channel id to database
-                    Artemis.provider.save_channel(ctx.message.guild.id, id_)
+                    Janus.provider.save_channel(ctx.message.guild.id, id_)
 
                 # run only if response is sent by the main user
                 return response.author == ctx.message.author
@@ -54,7 +54,7 @@ class ChannelCommand(commands.Cog):
         # listen for response, fail on timeout
         try:
             await self.client.wait_for("message", check=get_response, timeout=30.0)
-            channel = ctx.message.guild.get_channel(Artemis.provider.get_channel(ctx.message.guild.id))
+            channel = ctx.message.guild.get_channel(Janus.provider.get_channel(ctx.message.guild.id))
             await ctx.message.channel.send("{} has been set!".format(channel.mention))
         except asyncio.TimeoutError:
             await ctx.message.channel.send("command timed-out! try again")

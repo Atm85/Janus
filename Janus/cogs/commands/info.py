@@ -12,7 +12,7 @@ class InfoCommand(commands.Cog):
 
         embed = discord.Embed(
             color=12632256,
-            title="Artemis v2.0",
+            title="Janus v2.0",
             description="Welcome new members with style! overlay new member's avatar over a custom background image. Change the avatars position to fit your needs!"
         )
 

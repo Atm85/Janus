@@ -2,7 +2,7 @@ import asyncio
 import discord
 
 from discord.ext import commands
-from client import Artemis
+from client import Janus
 
 
 class TestCommand(commands.Cog):
@@ -13,7 +13,7 @@ class TestCommand(commands.Cog):
     async def test(self, ctx):
 
         # database connection
-        connection = Artemis.provider.connection
+        connection = Janus.provider.connection
 
         # gets the users avatar url
         if not ctx.message.author.avatar_url == "":
@@ -24,9 +24,9 @@ class TestCommand(commands.Cog):
         await ctx.message.channel.send("A test message was sent to the channel that was set!")
 
         # args for sending the message
-        channel = ctx.message.guild.get_channel(Artemis.provider.get_channel(ctx.message.guild.id))
-        message = Artemis.provider.format_message(Artemis.provider.get_message(ctx.message.guild.id), ctx.message.guild, ctx.message.author)
-        await Artemis.provider.send(channel, message, avatar)
+        channel = ctx.message.guild.get_channel(Janus.provider.get_channel(ctx.message.guild.id))
+        message = Janus.provider.format_message(Janus.provider.get_message(ctx.message.guild.id), ctx.message.guild, ctx.message.author)
+        await Janus.provider.send(channel, message, avatar)
 
 
 def setup(client):

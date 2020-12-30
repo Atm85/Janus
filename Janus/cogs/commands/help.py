@@ -1,7 +1,7 @@
 import discord
 
 from discord.ext import commands
-from client import Artemis
+from client import Janus
 
 
 class HelpCommand(commands.Cog):
@@ -27,13 +27,13 @@ class HelpCommand(commands.Cog):
             title="{} help".format(self.client.user)
         )
 
-        embed.add_field(name="{}channel".format(Artemis.prefix), value="sets channel to use to send messages in")
-        embed.add_field(name="{}message".format(Artemis.prefix), value="sets the join message")
-        embed.add_field(name="{}image".format(Artemis.prefix), value="sets the image overlay banner with message (optional)")
-        embed.add_field(name="{}pos".format(Artemis.prefix), value="changes the image overlay position on the banner")
-        embed.add_field(name="{}info".format(Artemis.prefix), value="bot information")
-        embed.add_field(name="{}lore".format(Artemis.prefix), value="Artemis lore")
-        embed.add_field(name="{}ping".format(Artemis.prefix), value="view bot latency")
+        embed.add_field(name="{}channel".format(Janus.prefix), value="sets channel to use to send messages in")
+        embed.add_field(name="{}message".format(Janus.prefix), value="sets the join message")
+        embed.add_field(name="{}image".format(Janus.prefix), value="sets the image overlay banner with message (optional)")
+        embed.add_field(name="{}pos".format(Janus.prefix), value="changes the image overlay position on the banner")
+        embed.add_field(name="{}info".format(Janus.prefix), value="bot information")
+        embed.add_field(name="{}lore".format(Janus.prefix), value="Janus lore")
+        embed.add_field(name="{}ping".format(Janus.prefix), value="view bot latency")
 
         # sends the discord.Embed to the current channel
         await ctx.message.channel.send(embed=embed)

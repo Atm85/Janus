@@ -1,4 +1,4 @@
-from client import Artemis
+from client import Janus
 from provider import MysqlProvider
 
 
@@ -10,7 +10,7 @@ def main():
 
     # create new bot instance
     #################################
-    client = Artemis(provider)
+    client = Janus(provider)
 
     # connect to discord websocket
     #################################

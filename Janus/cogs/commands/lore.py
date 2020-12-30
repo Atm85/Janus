@@ -12,11 +12,11 @@ class LoreCommand(commands.Cog):
 
         embed = discord.Embed(
             color=12632256,
-            title="Artemis v2.0",
-            description="Artemis is the Greek goddess of the hunt, the wilderness, wild animals, the Moon, and chastity. Artemis is the daughter of Zeus and Leto, and the twin sister of Apollo"
+            title="Janus v2.0",
+            description="Janus is the Roman god of beginnings, gates, transitions, time, duality, doorways, passages, frames, and endings"
         )
 
-        embed.add_field(name="Read more?", value="[from wikipedia.org](https://en.wikipedia.org/wiki/Artemis)")
+        embed.add_field(name="Read more?", value="[from wikipedia.org](https://en.wikipedia.org/wiki/Janus)")
         await ctx.message.channel.send(embed=embed)
 
 

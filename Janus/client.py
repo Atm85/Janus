@@ -14,7 +14,7 @@ internal_extensions = [
 ]
 
 
-class Artemis(commands.Bot):
+class Janus(commands.Bot):
 
     # bot prefix
     prefix = None
@@ -30,8 +30,8 @@ class Artemis(commands.Bot):
         super().__init__(provider.prefix, intents=intents)
 
         self.remove_command("help")
-        Artemis.prefix = provider.prefix
-        Artemis.provider = provider
+        Janus.prefix = provider.prefix
+        Janus.provider = provider
 
     # called when the bot establishes a connection with discord
     # ---------- Overridden from 'commands.Bot' class ----------
@@ -69,8 +69,8 @@ class Artemis(commands.Bot):
             return
 
         # sends message
-        channel = member.guild.get_channel(Artemis.provider.get_channel(member.guild.id))
-        message = self.provider.format_message(Artemis.provider.get_message(member.guild.id), member.guild, member)
+        channel = member.guild.get_channel(Janus.provider.get_channel(member.guild.id))
+        message = self.provider.format_message(Janus.provider.get_message(member.guild.id), member.guild, member)
         await self.provider.send(channel, message, avatar)
 
 # end of class
