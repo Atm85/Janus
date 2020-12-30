@@ -48,7 +48,7 @@ class MysqlProvider:
 
             # read data from configuration file
             ####################################
-            with open("../config.json", 'r') as f:
+            with open("config.json", 'r') as f:
                 data = json.load(f)
                 if not check_data(data):
                     print("All fields in config.json must be filled!")
@@ -65,7 +65,7 @@ class MysqlProvider:
 
             # save new blank config
             ####################################
-            with open("../config.json", 'w+') as f:
+            with open("config.json", 'w+') as f:
                 data = {
                     "token": "",
                     "prefix": "",
