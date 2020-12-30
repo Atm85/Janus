@@ -1,4 +1,5 @@
 Janus/__pycache__/*
 Janus/cogs/commands/__pycache__/*
+config.json
 .idea/*
 venv/*

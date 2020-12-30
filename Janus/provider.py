@@ -1,7 +1,32 @@
 import discord
+import json
 import pymysql.cursors
 
 from processor import Processor
+
+
+def check_data(data) -> bool:
+    value = True
+
+    if data["token"] == "":
+        value = False
+
+    if data["prefix"] == "":
+        value = False
+
+    if data["host"] == "":
+        value = False
+
+    if data["user"] == "":
+        value = False
+
+    if data["password"] == "":
+        value = False
+
+    if data["schema"] == "":
+        value = False
+
+    return value
 
 
 class MysqlProvider:
@@ -11,36 +36,60 @@ class MysqlProvider:
 
     processor = Processor()
 
-    host = "51.195.170.53"
-    user = "u9_03ETWJ5zGo"
-    password = "3+uI^p9qpQ6Zu=+3db5XPzmW"
-    schema = "s9_artemis"
+    host = ""
+    user = ""
+    password = ""
+    schema = ""
 
     connection = None
 
     def __init__(self):
+        try:
+
+            # read data from configuration file
+            ####################################
+            with open("../config.json", 'r') as f:
+                data = json.load(f)
+                if not check_data(data):
+                    print("All fields in config.json must be filled!")
+                    exit(1)
+
+                self.token = data["token"]
+                self.prefix = data["prefix"]
+                self.host = data["host"]
+                self.user = data["user"]
+                self.password = data["password"]
+                self.schema = data["schema"]
+
+        except FileNotFoundError:
+
+            # save new blank config
+            ####################################
+            with open("../config.json", 'w+') as f:
+                data = {
+                    "token": "",
+                    "prefix": "",
+                    "host": "",
+                    "user": "",
+                    "password": "",
+                    "schema": "",
+                }
+
+                json.dump(data, f, indent=4)
+                print("A new blank config file has been generated!")
+                print("Please edit configuration file in full and run again...")
+                exit(0)
+
         self.connection = pymysql.connect(host=self.host, user=self.user, password=self.password, db=self.schema)
         try:
             # registers new tables if not existent
             ########################################
             with self.connection.cursor() as cursor:
-                sql1 = "CREATE TABLE IF NOT EXISTS client(token TEXT NOT NULL, prefix TEXT NOT NULL)"
-                sql2 = "CREATE TABLE IF NOT EXISTS guild_data(id BIGINT NOT NULL PRIMARY KEY, channel BIGINT NOT NULL, message TEXT NOT NULL, enabled BOOLEAN NOT NULL)"
-                sql3 = "CREATE TABLE IF NOT EXISTS image_data(id BIGINT NOT NULL PRIMARY KEY, base64 MEDIUMBLOB NOT NULL, pos VARCHAR(1) NOT NULL, size TINYINT NOT NULL , use_image BOOLEAN NOT NULL)"
+                sql1 = "CREATE TABLE IF NOT EXISTS guild_data(id BIGINT NOT NULL PRIMARY KEY, channel BIGINT NOT NULL, message TEXT NOT NULL, enabled BOOLEAN NOT NULL)"
+                sql2 = "CREATE TABLE IF NOT EXISTS image_data(id BIGINT NOT NULL PRIMARY KEY, base64 MEDIUMBLOB NOT NULL, pos VARCHAR(1) NOT NULL, size TINYINT NOT NULL , use_image BOOLEAN NOT NULL)"
                 cursor.execute(sql1)
                 cursor.execute(sql2)
-                cursor.execute(sql3)
                 self.connection.commit()
-
-            # ----- gets client credentials
-            ########################################
-            with self.connection.cursor() as cursor:
-                sql = "SELECT * FROM `client`"
-                cursor.execute(sql)
-                result = cursor.fetchone()
-                if result is not None:
-                    self.token = result[0]
-                    self.prefix = result[1]
 
         finally:
             pass
