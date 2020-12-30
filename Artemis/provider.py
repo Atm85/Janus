@@ -12,9 +12,9 @@ class MysqlProvider:
     processor = Processor()
 
     host = "51.195.170.53"
-    user = "u3_07AgW2ewtO"
-    password = "od=RbeVTZDlY3n.6w+rTm45n"
-    schema = "s3_artemis"
+    user = "u9_03ETWJ5zGo"
+    password = "3+uI^p9qpQ6Zu=+3db5XPzmW"
+    schema = "s9_artemis"
 
     connection = None
 
