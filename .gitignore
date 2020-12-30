@@ -1,0 +1,4 @@
+Artemis/__pycache__/*
+Artemis/cogs/commands/__pycache__/*
+.idea/*
+venv/*
