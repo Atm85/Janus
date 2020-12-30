@@ -37,7 +37,6 @@ class Janus(commands.Bot):
     # ---------- Overridden from 'commands.Bot' class ----------
     ############################################################
     async def on_ready(self):
-        print(self.user.name + " - status: online")
 
         # changes bots presence in discord
         await self.change_presence(activity=discord.Game(name="Bot help | {}help".format(self.prefix)))
@@ -49,6 +48,8 @@ class Janus(commands.Bot):
                 print("--> {} has been loaded".format(ext))
             except Exception as error:
                 print("[x] {} failed to load: [{}]".format(ext, error))
+
+            print(self.user.name + " - status: online")
 
     # called when a member join a guild
     ####################################
