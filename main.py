@@ -1,20 +1,15 @@
-from Janus import Client
-from Janus import MysqlProvider
+import Janus
 
 
 def main():
 
-    # register data-storing instance
-    #################################
-    provider = MysqlProvider()
-
     # create new bot instance
     #################################
-    client = Client(provider)
+    client = Janus.Client(Janus.provider)
 
     # connect to discord websocket
     #################################
-    client.run(provider.token)
+    client.run(Janus.provider.token)
 
 
 if __name__ == '__main__':
