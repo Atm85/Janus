@@ -1,5 +1,5 @@
-from client import Janus
-from provider import MysqlProvider
+from Janus import Client
+from Janus import MysqlProvider
 
 
 def main():
@@ -10,7 +10,7 @@ def main():
 
     # create new bot instance
     #################################
-    client = Janus(provider)
+    client = Client(provider)
 
     # connect to discord websocket
     #################################

@@ -5,7 +5,7 @@ import requests
 
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageOps
-from client import Janus
+from Janus import Client
 
 
 class Processor:
@@ -37,14 +37,14 @@ class Processor:
 
                     # decode banner from base64
                     buffer = BytesIO()
-                    base64_string = Janus.provider.get_base64(channel.guild.id)
+                    base64_string = Client.provider.get_base64(channel.guild.id)
                     decode_b64 = base64.b64decode(base64_string.decode())
                     bytes_ = BytesIO(decode_b64)
                     banner = Image.open(bytes_)
 
                     # avatar args
-                    pos = Janus.provider.get_avpos(channel.guild.id)
-                    avsize = round((banner.height * Janus.provider.get_avsize(channel.guild.id) / 100))
+                    pos = Client.provider.get_avpos(channel.guild.id)
+                    avsize = round((banner.height * Client.provider.get_avsize(channel.guild.id) / 100))
 
                     # calculate avatar position on the banner
                     if pos == "L":

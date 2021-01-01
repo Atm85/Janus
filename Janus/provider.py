@@ -2,7 +2,7 @@ import discord
 import json
 import pymysql.cursors
 
-from processor import Processor
+import Janus
 
 
 def check_data(data) -> bool:
@@ -33,9 +33,6 @@ class MysqlProvider:
 
     token = ""
     prefix = ""
-
-    processor = Processor()
-
     host = ""
     user = ""
     password = ""
@@ -250,7 +247,7 @@ class MysqlProvider:
             return
 
         # continue if this guild is using images
-        await self.processor.upload(channel, message, avatar)
+        await Janus.processor.upload(channel, message, avatar)
 
     """
     Formats the message content from the content args

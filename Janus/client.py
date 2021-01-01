@@ -1,16 +1,15 @@
 import discord
 from discord.ext import commands
 
-
 internal_extensions = [
-    "cogs.commands.help",
-    "cogs.commands.info",
-    "cogs.commands.lore",
-    "cogs.commands.ping",
-    "cogs.commands.channel",
-    "cogs.commands.message",
-    "cogs.commands.image",
-    "cogs.commands.test"
+    "Janus.commands.help",
+    "Janus.commands.info",
+    "Janus.commands.lore",
+    "Janus.commands.ping",
+    "Janus.commands.channel",
+    "Janus.commands.message",
+    "Janus.commands.image",
+    "Janus.commands.test"
 ]
 
 

@@ -1,7 +1,7 @@
 import asyncio
 
 from discord.ext import commands
-from client import Janus
+from Janus import Client
 
 
 class ImageCommand(commands.Cog):
@@ -12,7 +12,7 @@ class ImageCommand(commands.Cog):
     async def image(self, ctx):
 
         # database connection
-        connection = Janus.provider.connection
+        connection = Client.provider.connection
 
         # gets the response from the user after executing main command
         def get_response(response):
@@ -21,11 +21,11 @@ class ImageCommand(commands.Cog):
             if response.attachments:
 
                 # encodes the attachments url into base64 binary
-                to_base64 = Janus.provider.processor.encode(response.attachments[0].url)
+                to_base64 = Client.provider.processor.encode(response.attachments[0].url)
 
                 # save bas64 image data to database
-                Janus.provider.set_using_image(ctx.message.guild.id, True)
-                Janus.provider.save_image(ctx.message.guild.id, to_base64)
+                Client.provider.set_using_image(ctx.message.guild.id, True)
+                Client.provider.save_image(ctx.message.guild.id, to_base64)
 
             # run only if response is sent by the main user
             return response.author == ctx.message.author

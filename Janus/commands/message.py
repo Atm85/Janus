@@ -2,7 +2,7 @@ import asyncio
 import discord
 
 from discord.ext import commands
-from client import Janus
+from Janus import Client
 
 
 class MessageCommand(commands.Cog):
@@ -13,7 +13,7 @@ class MessageCommand(commands.Cog):
     async def message(self, ctx):
 
         # database connection
-        connection = Janus.provider.connection
+        connection = Client.provider.connection
 
         # gets a response from the user after executing main command
         def get_response(response):
@@ -25,11 +25,11 @@ class MessageCommand(commands.Cog):
             with connection.cursor() as cursor:
 
                 # create new entry if not existent
-                if Janus.provider.get_guild(ctx.message.guild.id) is None:
-                    Janus.provider.create_new(ctx.message.guild.id)
+                if Client.provider.get_guild(ctx.message.guild.id) is None:
+                    Client.provider.create_new(ctx.message.guild.id)
 
                 # saves message content to database
-                Janus.provider.save_message(ctx.message.guild.id, content)
+                Client.provider.save_message(ctx.message.guild.id, content)
 
                 # run only if response is sent by the main user
                 return response.author == ctx.message.author
@@ -61,8 +61,8 @@ class MessageCommand(commands.Cog):
         # listen for response, fail on timeout
         try:
             await self.client.wait_for("message", check=get_response, timeout=30.0)
-            from_database = Janus.provider.get_message(ctx.message.guild.id)
-            message = Janus.provider.format_message(from_database, ctx.message.guild, ctx.message.author)
+            from_database = Client.provider.get_message(ctx.message.guild.id)
+            message = Client.provider.format_message(from_database, ctx.message.guild, ctx.message.author)
             embed1 = discord.Embed(
                 color=12632256,
                 title="Message has been set!",
