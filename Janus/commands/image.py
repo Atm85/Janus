@@ -1,4 +1,5 @@
 import asyncio
+import Janus
 
 from discord.ext import commands
 from Janus import Client
@@ -21,7 +22,7 @@ class ImageCommand(commands.Cog):
             if response.attachments:
 
                 # encodes the attachments url into base64 binary
-                to_base64 = Client.provider.processor.encode(response.attachments[0].url)
+                to_base64 = Janus.processor.encode(response.attachments[0].url)
 
                 # save bas64 image data to database
                 Client.provider.set_using_image(ctx.message.guild.id, True)
@@ -48,7 +49,7 @@ class ImageCommand(commands.Cog):
         # listen for response, fail on timeout
         try:
             await self.client.wait_for("message", check=get_response, timeout=30.0)
-            await ctx.message.channel.send("Image set!, run command '{}test' to preview".format(Janus.prefix))
+            await ctx.message.channel.send("Image set!, run command '{}test' to preview".format(Client.prefix))
         except asyncio.TimeoutError:
             await ctx.message.channel.send("command timed-out! try again")
 
