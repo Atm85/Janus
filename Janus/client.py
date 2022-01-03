@@ -31,6 +31,7 @@ class Janus(commands.Bot):
         self.remove_command("help")
         Janus.prefix = provider.prefix
         Janus.provider = provider
+        print("starting...")
 
     # called when the bot establishes a connection with discord
     # ---------- Overridden from 'commands.Bot' class ----------
