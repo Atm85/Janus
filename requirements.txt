@@ -1,5 +1,4 @@
 requests
-aiohttp
 discord.py
 Pillow
 PyMySQL
