@@ -4,7 +4,6 @@ from discord.ext import commands
 internal_extensions = [
     "Janus.commands.help",
     "Janus.commands.info",
-    "Janus.commands.lore",
     "Janus.commands.ping",
     "Janus.commands.channel",
     "Janus.commands.message",
