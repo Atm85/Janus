@@ -1,18 +1,9 @@
 import discord
-from discord.ext import commands
-
-internal_extensions = [
-    "Janus.commands.help",
-    "Janus.commands.info",
-    "Janus.commands.ping",
-    "Janus.commands.channel",
-    "Janus.commands.message",
-    "Janus.commands.image",
-    "Janus.commands.test"
-]
+from discord import app_commands
+from Janus import commands
 
 
-class Janus(commands.Bot):
+class Janus(discord.Client):
 
     # bot prefix
     prefix = None
@@ -23,31 +14,19 @@ class Janus(commands.Bot):
     # initializes the bot client
     ############################################################
     def __init__(self, provider, **options):
-        intents = discord.Intents().default()
-        intents.members = True
-        super().__init__(provider.prefix, intents=intents)
-
-        self.remove_command("help")
-        Janus.prefix = provider.prefix
-        Janus.provider = provider
         print("starting...")
+        super().__init__(intents=discord.Intents().all())
+        self.provider = provider
+        self.tree = app_commands.CommandTree(self)
+        self.tree.add_command(commands.ping, guild=discord.Object(id="774799324373712907"))
 
     # called when the bot establishes a connection with discord
     # ---------- Overridden from 'commands.Bot' class ----------
     ############################################################
     async def on_ready(self):
-
-        # changes bots presence in discord
-        await self.change_presence(activity=discord.Game(name="Bot help | {}help".format(self.prefix)))
-
-        # registers bot commands
-        for ext in internal_extensions:
-            try:
-                self.load_extension(ext)
-                print("--> {} has been loaded".format(ext))
-            except Exception as error:
-                print("[x] {} failed to load: [{}]".format(ext, error))
-
+        await self.wait_until_ready()
+        await self.change_presence(activity=discord.Game(name="Welcome members with style!"))
+        await self.tree.sync(guild=discord.Object(id="774799324373712907"))
         print(self.user.name + " - status: online")
 
     # called when a member join a guild
