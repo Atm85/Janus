@@ -1,58 +1,71 @@
-import asyncio
 import Janus
+import discord
+from discord import app_commands
 
-from discord.ext import commands
-from Janus import Client
 
+class Image(app_commands.Group):
 
-class ImageCommand(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+    @app_commands.command(description="Sets an attachment on a welcome message.")
+    @app_commands.describe(attachment="The attachment to upload.")
+    async def upload(self, interaction: discord.Interaction, attachment: discord.Attachment):
 
-    @commands.command(pass_context=True)
-    async def image(self, ctx):
-
-        # database connection
-        connection = Client.provider.connection
-
-        # gets the response from the user after executing main command
-        def get_response(response):
-
-            # check if the response contains an attachment
-            if response.attachments:
-
-                # encodes the attachments url into base64 binary
-                to_base64 = Janus.processor.encode(response.attachments[0].url)
-
-                # save bas64 image data to database
-                Client.provider.set_using_image(ctx.message.guild.id, True)
-                Client.provider.save_image(ctx.message.guild.id, to_base64)
-
-            # run only if response is sent by the main user
-            return response.author == ctx.message.author
+        client = interaction.client
+        author = interaction.user
+        guild = interaction.guild
 
         # check user permissions
-        if not ctx.message.author.guild_permissions.administrator:
+        if not author.guild_permissions.administrator:
+            await interaction.response.send_message("You do not have permission to use this command!")
+            return
 
-            onward = False
+        # create new entry if not exists
+        if client.provider.get_guild(guild.id) is None:
+            client.provider.create_new(guild.id)
 
-            if ctx.message.author.id == 421043401040068608:
-                onward = True
+        # encodes the attachments url into base64 binary
+        base64_encoded = Janus.processor.encode(attachment.url)
 
-            if not onward:
-                await ctx.message.channel.send("You do not have permission to use this command!")
-                return
+        # save bas64 image data to database
+        client.provider.set_using_image(guild.id, True)
+        client.provider.save_image(guild.id, base64_encoded)
+        await interaction.response.send_message("Image set! run command `/preview` to preview settings.")
 
-        # continue with setup
-        await ctx.message.channel.send("Please upload the image you wish to use... supports images of ANY dimensions! - `command will time-out in 30s`")
+    @app_commands.command(description="Enables the use of background attachments.")
+    async def enable(self, interaction: discord.Interaction):
 
-        # listen for response, fail on timeout
-        try:
-            await self.client.wait_for("message", check=get_response, timeout=30.0)
-            await ctx.message.channel.send("Image set!, run command '{}test' to preview".format(Client.prefix))
-        except asyncio.TimeoutError:
-            await ctx.message.channel.send("command timed-out! try again")
+        client = interaction.client
+        author = interaction.user
+        guild = interaction.guild
 
+        # check user permissions
+        if not author.guild_permissions.administrator:
+            await interaction.response.send_message("You do not have permission to use this command!")
+            return
 
-def setup(client):
-    client.add_cog(ImageCommand(client))
+        # create new entry if not exists
+        if client.provider.get_guild(guild.id) is None:
+            client.provider.create_new(guild.id)
+
+        # save to database
+        client.provider.set_using_image(guild.id, True)
+        await interaction.response.send_message("Enabled using images.")
+
+    @app_commands.command(description="Disables the use of background attachments.")
+    async def disable(self, interaction: discord.Interaction):
+
+        client = interaction.client
+        author = interaction.user
+        guild = interaction.guild
+
+        # check user permissions
+        if not author.guild_permissions.administrator:
+            await interaction.response.send_message("You do not have permission to use this command!")
+            return
+
+        # create new entry if not exists
+        if client.provider.get_guild(guild.id) is None:
+            client.provider.create_new(guild.id)
+
+        # save to database
+        client.provider.set_using_image(guild.id, False)
+        await interaction.response.send_message("Disabled using images.")
