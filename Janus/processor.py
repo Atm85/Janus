@@ -64,7 +64,7 @@ class Processor:
                     draw = ImageDraw.Draw(mask)
                     draw.ellipse((0, 0) + size, fill=255)
                     mask = mask.resize(avatar.size, Image.ANTIALIAS)
-                    avatar.putalpha(mask)
+                    # avatar.putalpha(mask)
 
                     # generates a white border around the users avatar
                     border = Image.new("L", size, 0)
