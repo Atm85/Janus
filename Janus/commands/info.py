@@ -12,5 +12,5 @@ async def info(interaction: discord.Interaction):
     )
 
     embed.add_field(name="Bot author", value="<@421043401040068608>")
-    embed.add_field(name="want to add `Janus#2903` to your server?", value="[Invite me](https://discord.com/api/oauth2/authorize?client_id=793320535413096448&permissions=8&scope=bot)")
+    embed.add_field(name="want to add `Janus#2903` to your server?", value="[Invite me](https://discord.com/api/oauth2/authorize?client_id=793320535413096448&permissions=8&scope=bot%20applications.commands)")
     await interaction.response.send_message(embed=embed)
