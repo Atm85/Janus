@@ -16,12 +16,5 @@ Janus is a discord bot writen in python. This bot serves to handle everything re
 
 # Using Janus
 I'd recommend you just invite Janus the conventional way rather than running from source as it takes a bit of setup to get working properly...
- * <a href="https://discord.com/oauth2/authorize?client_id=793320535413096448&permissions=8&scope=bot">Invite link</a>
-
-# Examples
-If you want to see Janus in action, here are a list of discord servers currently using Janus `(Updated Regularly)`
-
- * <a href="https://discord.gg/8FPUjnPde5" target="_blank">Elemental: OP Factions</a>
-
-Want your server listed? open an issue
+ * <a href="https://discord.com/api/oauth2/authorize?client_id=793320535413096448&permissions=8&scope=bot%20applications.commands">Invite link</a>
 
