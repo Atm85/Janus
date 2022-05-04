@@ -1,6 +1,23 @@
+import asyncio
+
 import discord
 from discord import app_commands
 from Janus import commands
+
+
+async def update_presence(client: discord.Client):
+
+    while True:
+
+        members = 0
+        servers = len(client.guilds)
+
+        for guild in client.guilds:
+            members += len(guild.members)
+
+        activity = discord.Activity(name=f"Welcoming {members} members in {servers} servers", type=0)
+        await client.change_presence(activity=activity)
+        await asyncio.sleep(5)
 
 
 class Janus(discord.Client):
@@ -31,9 +48,9 @@ class Janus(discord.Client):
     ############################################################
     async def on_ready(self):
         await self.wait_until_ready()
-        await self.change_presence(activity=discord.Game(name="Welcome members with style!"))
         await self.tree.sync()
         print(self.user.name + " - status: online")
+        await update_presence(self)
 
     # called when a member join a guild
     ####################################
